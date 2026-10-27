@@ -1,20 +1,17 @@
-# Intelligent Content Delivery Network (CDN) Load-Aware Routing Simulator
+# Load-Aware CDN Routing Simulator
 
-A high-performance network infrastructure simulation engine engineered in Python to model real-time client traffic distribution across a distributed topological network of global edge nodes.
+A small Python simulation that selects an edge-server entry from a fixed list using client-to-server Euclidean distance and a load penalty. It demonstrates a routing heuristic; it does not send network traffic or measure real CDN performance.
 
-Rather than relying purely on static spatial proximity metrics, this engine implements an active load-aware routing heuristic. This strategy dynamically steers client request vectors toward the optimal server node, mitigating transit latency while preventing structural resource starvation across the infrastructure.
+## Routing rule
 
-## Architectural Framework
+For each configured server, the script computes `distance + 0.2 * load_pct`. Entries at 95% load or higher are skipped. The example uses four hard-coded locations and loads.
 
-1. Spatial Proximity Computation: Utilizes standard Euclidean distance formulations to calculate real-time geometric distance metrics between an incoming client request and target edge server nodes.
-
-2. Load-Aware Latency Penalty Logic: Injects dynamic numerical routing penalties proportional to live server capacity statistics. This balances traffic distribution away from edge components encountering active load spikes.
-
-3. Failover Defense System: Enforces automatic node circuit-breaking thresholds. Server units operating at critical system capacity (95% and above) are systematically dropped from the active routing pool to maintain network integrity.
-
-## Deployment and Verification
-
-Execute the standalone simulation engine using the native Python runtime via the command line interface:
+## Run
 
 ```bash
-python3 cdn_simulator.py
+python cdn_simulator.py
+```
+
+## Scope and limitations
+
+This is a standalone demonstration with static coordinates and load values, not a distributed CDN, health-check system, or production router. The coordinates are illustrative rather than geographic measurements. If every server is at or above the skip threshold, no route is selected and the current script does not handle that case.
